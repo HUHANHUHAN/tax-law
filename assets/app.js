@@ -156,21 +156,23 @@
       });
     }
   }
-  function openNoteEditor(n, content) {
+  
+ function openNoteEditor(n, content) {
     var html = '<p class="note-tip">为《' + n.title + '》写个人批注，内容仅保存在本设备本地。</p>' +
       '<textarea id="note-area" class="note-area" placeholder="输入你的理解、疑问或标注…">' + (content || "") + '</textarea>' +
       '<div class="note-foot"><span id="note-save-hint" class="note-save-hint"></span>' +
       '<button id="note-save" class="btn-primary" type="button">保存</button></div>';
     showModal("个人笔记", html);
     var area = $("#note-area"), hint = $("#note-save-hint");
+    // 纯静态版本：保存功能已移除
+    if (typeof TaxCloud === 'undefined') return;
     function doSave() {
       TaxCloud.saveNote(n.id, area.value).then(function () {
         hint.textContent = "已保存 ✓"; setTimeout(function () { if (hint) hint.textContent = ""; }, 1500);
       });
     }
-    $("#note-save").addEventListener("click", doSave);
-    area.addEventListener("blur", doSave);
-  }
+}
+
   function updateMyBtn() {
     var b = $("#my-btn"); if (!b) return;
     TaxCloud.getProfile().then(function (p) {
