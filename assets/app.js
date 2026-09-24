@@ -133,6 +133,8 @@
       '<span class="tool-mode">本地保存</span></div>';
   }
   function bindPageTools(n) {
+    if (typeof TaxCloud === 'undefined') return; // 纯静态环境，跳过云服务功能
+    
     var bm = $("#bm-btn");
     if (bm) {
       TaxCloud.isBookmarked(n.id).then(function (b) {
@@ -146,6 +148,7 @@
         });
       });
     }
+}
     var nb = $("#note-btn");
     if (nb) {
       nb.addEventListener("click", function () {
